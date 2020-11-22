@@ -35,9 +35,9 @@ class AioAlipayAuth:
                 resp_text = await resp.text()
                 # print(resp_text)
                 result = json.loads(resp_text)
-                data = result.get('alipay_system_oauth_token_response')
-                if 'code' in data:
+                if 'error_response' in result:
                     raise AioAlipayAuthError(result)
+                data = result.get('alipay_system_oauth_token_response')
                 access_token = data.get('access_token')
                 user_id = data.get('user_id')
                 return access_token, user_id
